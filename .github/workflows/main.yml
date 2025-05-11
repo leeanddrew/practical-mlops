@@ -21,11 +21,14 @@ jobs:
       - name: Install dependencies
         run: |
           make install
+        working-directory: chapter-1
 
       - name: Lint
         run: |
           make lint
+        working-directory: chapter-1
 
       - name: Test
         run: |
           make test
+        working-directory: chapter-1
