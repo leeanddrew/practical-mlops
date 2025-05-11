@@ -1,0 +1,34 @@
+name: Run Locust Load Test on Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Flask App in Background
+        run: |
+          python app.py &
+          sleep 5  # wait for the app to boot
+
+      - name: Run Locust Load Test
+        run: |
+          locust -f locustfile.py --headless --host=http://localhost:8000 \
+          --users 10 --spawn-rate 2 --run-time 30s

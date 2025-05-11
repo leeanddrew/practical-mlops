@@ -1,6 +1,4 @@
-def add(x,y):
-    """This is an add function"""
-    
-    return x+y
+def hello(name):
+    return f"Hello, {name}!"
 
-print(add(1,1))
+print(hello("Andrew"))
